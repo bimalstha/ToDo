@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <form id="login-form" class="grid gap-2 list-none p-4">
+        <li class="grid gap-1">
+            <label for="username">
+                Username
+            </label>
+            <input id="username" class="border border-gray-200" type="text" required>
+        </li>
+        <li class="grid gap-1">
+            <label for="password">
+                password
+            </label>
+            <input id="password" class="border border-gray-200" type="text" required>
+        </li>
+        <button class="bg-red-400" type="submit">
+            Login
+        </button>
+    </form>
+    <script src="./login.js"></script>
+</body>
+
+</html>
