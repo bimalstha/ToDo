@@ -1,25 +1,38 @@
 import { Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
+
+
 import { dbSource } from "../connection/connection";
 import { User } from "../entities/user.entities";
 import { hashPassword, verifyPassword } from "../utilites/hashPassword";
 import { userValidator } from "../validatior/data.validator";
 
 
+// saramsh way of coding
+// const UserController = Router();
+
+// UserController.get('/api', (req: Request, res: Response) => {
+//     try {
+//         return res.send({ msg: "kdfjlkd" })
+//     } catch (e) { 
+//         return res.status(400).send({ msg: e.message })
+//     }
+// })
+// export default UserController;
+
+/**
+ * @openapi
+ * /user:
+ *   get:
+ *     description: Welcome to swagger-jsdoc!
+ *     responses:
+ *       200:
+ *         description: Returns a mysterious string.
+ */
+
 const userRepository = dbSource.getRepository(User);
 
-
-export const getUser = async (req: Request, res: Response): Promise<Response> => {
-    const specificUser = await userRepository.findOne({
-        where: {
-            userName: req.body.userName,
-        }
-    });
-    console.table(specificUser);
-    return res.send(specificUser);
-}
-
-export const addUser = async (req: Request, res: Response): Promise<Response> => {
+export const registerUser = async (req: Request, res: Response): Promise<Response> => {
     try {
         let bodyUser = await userRepository.findOne({
             where: {
@@ -33,10 +46,8 @@ export const addUser = async (req: Request, res: Response): Promise<Response> =>
         };
         req.body.password = await hashPassword(req.body.password);    //password changed to hashed password
         const userbody = req.body;
-        console.log("userbody", userbody);
         const userMap = userRepository.create(userbody);
         await userRepository.save(userMap);
-        console.log("usermap", userMap);
         return res.send({ msg: "user created" });
     } catch (error) {
         console.log(error)
@@ -48,15 +59,18 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
     try {
         const user = await userRepository.findOne({
             where: {
-                userName: req.body.userName
+                userName: req.body.userName,
             }
         });
-        console.log(user);
         if (user) {
             const x = await verifyPassword(req.body.password, user.password);
-            console.log(x);
             if (x) {
-                return res.send({ msg: "login successful" });
+                const token = jwt.sign({ id: user.userId }, "merotopsecretkeyisthatidontknowmytopsecret",
+                    { expiresIn: '1h' });
+                res.send({token:token,
+                msg:"login successful"});
+                // res.cookie("token", token, { maxAge: 900000, signed: false, httpOnly: false })
+                // return res.send({ msg: "login successful" });
             } else {
                 return res.send({ msg: "invalid credentials" });
             }
@@ -81,16 +95,5 @@ export const deleteUser = async (req: Request, res: Response): Promise<Response>
         return res.send({ msg: "user deleted" });
     } catch (error) {
         return res.send({ msg: "error" })
-    }
-}
-
-
-export const sendJwt = async (req: Request, res: Response): Promise<Response> => {
-    try {
-        const token = jwt.sign("bimal", "shrestha");
-        console.log("token");
-        return res.send(token)
-    } catch (error) {
-        console.log(error)
     }
 }

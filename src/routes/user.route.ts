@@ -1,17 +1,16 @@
 import { Router } from "express";
-import { addUser, deleteUser, getUser, login, sendJwt } from "../controllers/user.controller";
+import { registerUser, deleteUser, login } from "../controllers/user.controller";
 
 const userRoutes = Router()
 
-userRoutes.get("/user", getUser);
+// saramsh way of coding
+// import UserController from "../controllers/user.controller";
+// userRoutes.use("/user", UserController);
 
-userRoutes.post("/user", addUser);
+userRoutes.post("/user", registerUser);
 
-
-userRoutes.post("/user", login);
+userRoutes.post("/user/login", login);
 
 userRoutes.delete("/user", deleteUser);
-
-userRoutes.post("/user/test",sendJwt);
 
 export default userRoutes;

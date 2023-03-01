@@ -3,6 +3,10 @@ const password = document.querySelector('#password');
 const form = document.querySelector('#login-form');
 
 
+const axiosInstance = axios.create({
+    baseURL: "http://localhost:3001/",
+})
+
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     const data = {
@@ -10,9 +14,9 @@ form.addEventListener("submit", (e) => {
         password: password.value
     };
     console.log(data)
-    axios.post("http://localhost:3336/user/add", data)
+    axiosInstance.post("/user/login", data)
         .then(data => console.log(data))
-        .error(data => console.log(data))
+        .catch(e => console.log(e))
 
 })
 

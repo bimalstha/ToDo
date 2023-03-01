@@ -2,6 +2,16 @@ import { Request, Response } from "express";
 import { dbSource } from "../connection/connection";
 import { ToDoTask } from "../entities/task.entities";
 
+/**
+ * @openapi
+ * /task:
+ *   get:
+ *     description: Welcome to swagger-jsdoc!
+ *     responses:
+ *       200:
+ *         description: Returns a mysterious string.
+ */
+
 const taskRepository = dbSource.getRepository(ToDoTask);
 
 export const getTask = async (req: Request, res: Response): Promise<Response> => {

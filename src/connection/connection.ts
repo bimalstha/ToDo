@@ -3,9 +3,9 @@ import { DataSource } from "typeorm";
 export const dbSource = new DataSource({
     type: "mysql",
     host: "localhost",
-    port: parseInt(process.env.PORT),
+    port: parseInt(process.env.DBPORT),
     username: "root",
-    password: "",
+    password:"",
     database: "userlogin",
     synchronize: true,
     logging: false,
