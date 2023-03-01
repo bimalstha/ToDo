@@ -14,6 +14,6 @@ export class ToDoTask {
     isDoneStatus: boolean;
 
     @ManyToOne(() => User, (user) => user.tasks)
-    @JoinColumn({name:'user_id'})
+    @JoinColumn({ name: 'user_id' })
     user: User;
 }

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { registerUser, deleteUser, login } from "../controllers/user.controller";
 
-const userRoutes = Router()
+const userRoutes = Router();
 
 // saramsh way of coding
 // import UserController from "../controllers/user.controller";

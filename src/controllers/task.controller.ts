@@ -1,35 +1,30 @@
 import { Request, Response } from "express";
 import { dbSource } from "../connection/connection";
 import { ToDoTask } from "../entities/task.entities";
+import { User } from "../entities/user.entities";
+import { getUserById } from "./user.controller";
 
-/**
- * @openapi
- * /task:
- *   get:
- *     description: Welcome to swagger-jsdoc!
- *     responses:
- *       200:
- *         description: Returns a mysterious string.
- */
 
 const taskRepository = dbSource.getRepository(ToDoTask);
 
 export const getTask = async (req: Request, res: Response): Promise<Response> => {
     try {
+        console.log(req.body.user, "mero id ")
+        const user = await getUserById(req.body.user);
         const userTask = await taskRepository.find({
             where: {
-                taskId: req.body.taskId,
-                task: req.body.task,
-                isDoneStatus: req.body.isDoneStatus,
+                user,
             }
         });
-        if (userTask.length > 0) {
+        console.log(userTask)
+        if (userTask.length) {
             return res.send(userTask);
         } else {
             return res.send({ msg: "user has no task" });
         }
     } catch (error) {
-        return res.send(error);
+        console.log(error);
+        return res.status(404).send(error);
     }
 }
 
@@ -47,7 +42,7 @@ export const addTask = async (req: Request, res: Response) => {
         // await taskRepository.save(taskMap);
         // return res.send({ msg: "task added" });
     } catch (error) {
-        console.log(error);
+        return res.status(404).send({ msg: "cant add" });
     }
 }
 

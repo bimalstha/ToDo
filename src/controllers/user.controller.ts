@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
+import * as dotenv from "dotenv";
 
 
 import { dbSource } from "../connection/connection";
@@ -7,6 +8,7 @@ import { User } from "../entities/user.entities";
 import { hashPassword, verifyPassword } from "../utilites/hashPassword";
 import { userValidator } from "../validatior/data.validator";
 
+dotenv.config();
 
 // saramsh way of coding
 // const UserController = Router();
@@ -19,16 +21,6 @@ import { userValidator } from "../validatior/data.validator";
 //     }
 // })
 // export default UserController;
-
-/**
- * @openapi
- * /user:
- *   get:
- *     description: Welcome to swagger-jsdoc!
- *     responses:
- *       200:
- *         description: Returns a mysterious string.
- */
 
 const userRepository = dbSource.getRepository(User);
 
@@ -65,12 +57,12 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
         if (user) {
             const x = await verifyPassword(req.body.password, user.password);
             if (x) {
-                const token = jwt.sign({ id: user.userId }, "merotopsecretkeyisthatidontknowmytopsecret",
+                const token = jwt.sign({ id: user.userId }, process.env.SECRET_KEY,
                     { expiresIn: '1h' });
-                res.send({token:token,
-                msg:"login successful"});
-                // res.cookie("token", token, { maxAge: 900000, signed: false, httpOnly: false })
-                // return res.send({ msg: "login successful" });
+                res.send({
+                    token: token,
+                    msg: "login successful"
+                });
             } else {
                 return res.send({ msg: "invalid credentials" });
             }
@@ -96,4 +88,16 @@ export const deleteUser = async (req: Request, res: Response): Promise<Response>
     } catch (error) {
         return res.send({ msg: "error" })
     }
+}
+
+export const getUserById = async (userId: string) => {
+    const user = userRepository.find({
+        where: {
+            userId,
+        }
+    });
+    if (user) {
+        return user;
+    }
+    throw new Error("User with the id doesn't exist");
 }
