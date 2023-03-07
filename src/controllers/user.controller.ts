@@ -36,7 +36,7 @@ export const registerUser = async (req: Request, res: Response): Promise<Respons
         if (bodyUser !== null) {
             throw { message: "user already registered" };
         };
-        req.body.password = await hashPassword(req.body.password);    //password changed to hashed password
+        req.body.password = await hashPassword(req.body.password); //password changed to hashed password
         const userbody = req.body;
         const userMap = userRepository.create(userbody);
         await userRepository.save(userMap);

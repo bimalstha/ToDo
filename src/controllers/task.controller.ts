@@ -50,15 +50,14 @@ export const addTask = async (req: Request, res: Response) => {
 export const deleteTask = async (req: Request, res: Response): Promise<Response> => {
     try {
         const user = await getUserById(req.body.user);
-        let { taskId, task, isDoneStatus } = req.body;
+        let { task, isDoneStatus, taskId } = req.body;
         let deleteTask = await taskRepository.find({
             where: {
-                user: user,
-                taskId: taskId,
-                task: task,
-                isDoneStatus: isDoneStatus,
+                user,
+                taskId,
             }
         });
+        console.log(deleteTask);
         if (deleteTask.length) {
             await taskRepository.remove(deleteTask);
             return res.send({ msg: "task deleted" });
@@ -74,19 +73,24 @@ export const deleteTask = async (req: Request, res: Response): Promise<Response>
 export const updateTask = async (req: Request, res: Response) => {
     try {
         const user = await getUserById(req.body.user);
-        let { taskId, task, isDoneStatus } = req.body;
+        let { task, isDoneStatus, taskId } = req.body;
         let updateTask = await taskRepository.find({
             where: {
                 user: user,
-                taskId: taskId,
-                task: task,
                 isDoneStatus: isDoneStatus,
             }
-        })
-        const updateMap = taskRepository.create(updateTask);
-        await taskRepository.save(updateMap);
-        return res.send({ msg: "task updated" });
+        });
+        if (updateTask.length) {
+            await taskRepository.update(taskId, {
+                task: task,
+                isDoneStatus: isDoneStatus
+            });
+            return res.send({ msg: "task updated" });
+        } else {
+            return res.send({ msg: "task not found" });
+        }
+
     } catch (error) {
-        return res.status(403).send({ msg: "error occured" })
+        return res.status(403).send({ msg: "error occured" });
     }
 }
