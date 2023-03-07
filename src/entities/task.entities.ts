@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { User } from "./user.entities";
 
-
+//crating table for task and its columns
 @Entity()
 export class ToDoTask {
     @PrimaryGeneratedColumn("uuid")
@@ -13,7 +13,7 @@ export class ToDoTask {
     @Column('boolean', { default: false })
     isDoneStatus: boolean;
 
-    @ManyToOne(() => User, (user) => user.tasks)
-    @JoinColumn({ name: 'user_id' })
-    user: User;
+    @ManyToOne(() => User, (user) => user.tasks)  //relation from user to task table 
+    @JoinColumn({ name: 'user_id' })      //setting name for the foreign key column 
+    user: User;                           
 }

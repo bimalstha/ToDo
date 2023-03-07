@@ -7,6 +7,8 @@ const userRoutes = Router();
 // import UserController from "../controllers/user.controller";
 // userRoutes.use("/user", UserController);
 
+
+//user API 
 userRoutes.post("/user", registerUser);
 
 userRoutes.post("/user/login", login);

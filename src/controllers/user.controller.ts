@@ -6,7 +6,7 @@ import * as dotenv from "dotenv";
 import { dbSource } from "../connection/connection";
 import { User } from "../entities/user.entities";
 import { hashPassword, verifyPassword } from "../utilites/hashPassword";
-import { userValidator } from "../validatior/data.validator";
+import { userValidator } from "../validatior/user_data.validator";
 
 dotenv.config();
 
@@ -55,9 +55,9 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
             }
         });
         if (user) {
-            const x = await verifyPassword(req.body.password, user.password);
+            const x = await verifyPassword(req.body.password, user.password);  //verify password
             if (x) {
-                const token = jwt.sign({ id: user.userId }, process.env.SECRET_KEY,
+                const token = jwt.sign({ id: user.userId }, process.env.SECRET_KEY, 
                     { expiresIn: '1h' });
                 res.send({
                     token: token,
@@ -82,7 +82,7 @@ export const deleteUser = async (req: Request, res: Response): Promise<Response>
             }
         });
         if (specificUser.length > 0) {
-            await userRepository.remove(specificUser);
+            await userRepository.remove(specificUser); 
         }
         return res.send({ msg: "user deleted" });
     } catch (error) {

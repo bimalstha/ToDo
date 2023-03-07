@@ -4,7 +4,7 @@ import { verifyJwt } from "../utilites/verify_jwt";
 
 const taskRoutes = Router();
 
-taskRoutes.get("/task", verifyJwt, getTask);
+taskRoutes.get("/task", verifyJwt, getTask);   //middleware and next function 
 
 taskRoutes.post("/task", verifyJwt, addTask);
 
