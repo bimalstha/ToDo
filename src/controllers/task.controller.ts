@@ -29,8 +29,8 @@ export const getTask = async (req: Request, res: Response): Promise<Response> =>
 
 export const addTask = async (req: Request, res: Response) => {
     try {
-        const userr = await getUserById(req.body.user);
-        console.log("task add", userr);
+        // const userr = await getUserById(req.body.user);
+        // console.log("task add", userr);
         let { task, isDoneStatus, user } = req.body;
         let newTask = new ToDoTask()
         newTask.task = task
@@ -50,7 +50,7 @@ export const addTask = async (req: Request, res: Response) => {
 export const deleteTask = async (req: Request, res: Response): Promise<Response> => {
     try {
         const user = await getUserById(req.body.user);
-        let { task, isDoneStatus, taskId } = req.body;
+        let { taskId } = req.body;
         let deleteTask = await taskRepository.find({
             where: {
                 user,

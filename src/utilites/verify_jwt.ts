@@ -8,7 +8,7 @@ export const verifyJwt = (req: Request, res: Response, next: NextFunction) => {
         let id = jwt.verify(a, process.env.SECRET_KEY); //extracting user_id from bearer token 
         console.log("'id'",id);
         console.log(id["id"]);
-        req.body.user = id["id"]        //adding user in the req.body
+        req.body.user = id["id"];        //adding user in the req.body
         next();                         //calling next function 
     }
     else {

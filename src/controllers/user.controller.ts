@@ -10,18 +10,6 @@ import { userValidator } from "../validatior/user_data.validator";
 
 dotenv.config();
 
-// saramsh way of coding
-// const UserController = Router();
-
-// UserController.get('/api', (req: Request, res: Response) => {
-//     try {
-//         return res.send({ msg: "kdfjlkd" })
-//     } catch (e) { 
-//         return res.status(400).send({ msg: e.message })
-//     }
-// })
-// export default UserController;
-
 const userRepository = dbSource.getRepository(User);
 
 export const registerUser = async (req: Request, res: Response): Promise<Response> => {
@@ -32,10 +20,12 @@ export const registerUser = async (req: Request, res: Response): Promise<Respons
             }
         });
         userValidator.parse(req.body);      //validating entered data
+
         // checking if userName already exists
         if (bodyUser !== null) {
             throw { message: "user already registered" };
         };
+
         req.body.password = await hashPassword(req.body.password); //password changed to hashed password
         const userbody = req.body;
         const userMap = userRepository.create(userbody);
@@ -57,7 +47,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
         if (user) {
             const x = await verifyPassword(req.body.password, user.password);  //verify password
             if (x) {
-                const token = jwt.sign({ id: user.userId }, process.env.SECRET_KEY, 
+                const token = jwt.sign({ id: user.userId }, process.env.SECRET_KEY,
                     { expiresIn: '1h' });
                 res.send({
                     token: token,
@@ -67,7 +57,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
                 return res.send({ msg: "invalid credentials" });
             }
         } else {
-            return res.send({ msg: "invalid credentials" });
+            return res.status(404).send({ msg: "invalid credentials" });
         }
     } catch (error) {
         res.status(404).send({ msg: "404 not found" });
@@ -76,13 +66,13 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
 
 export const deleteUser = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const specificUser = await userRepository.find({
+        const specificUser = await userRepository.findOne({
             where: {
                 userName: req.body.userName,
             }
         });
-        if (specificUser.length > 0) {
-            await userRepository.remove(specificUser); 
+        if (specificUser) {
+            await userRepository.remove(specificUser);
         }
         return res.send({ msg: "user deleted" });
     } catch (error) {

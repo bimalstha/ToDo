@@ -6,6 +6,7 @@ async function hashPassword(password: string) {
     return hash;
 }
 
+
 //function to verify password from user input
 async function verifyPassword(password: string, hashedPassword: string) {
     const verified = await argon2.verify(hashedPassword, password);
