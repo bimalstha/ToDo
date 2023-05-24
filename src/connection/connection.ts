@@ -1,10 +1,10 @@
 import { DataSource } from "typeorm";
 
 export const dbSource = new DataSource({
-    type: "mysql",
+    type: "postgres",
     host: "localhost",
     port: parseInt(process.env.DBPORT),
-    username: "root",
+    username: "postgres",
     password:"pass",
     database: "todo",
     synchronize: true,
