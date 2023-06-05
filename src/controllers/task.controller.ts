@@ -6,6 +6,7 @@ import { getUserById } from "./user.controller";
 
 const taskRepository = dbSource.getRepository(ToDoTask);
 
+
 export const getTask = async (req: Request, res: Response): Promise<Response> => {
     try {
         console.log(req.body.user, "mero id ");
@@ -27,7 +28,7 @@ export const getTask = async (req: Request, res: Response): Promise<Response> =>
     }
 }
 
-export const addTask = async (req: Request, res: Response) => {
+export const addTask = async (req: Request, res: Response):Promise<Response> => {
     try {
         // const userr = await getUserById(req.body.user);
         // console.log("task add", userr);
