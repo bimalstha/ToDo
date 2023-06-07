@@ -11,58 +11,46 @@ import taskRoutes from "./routes/task.route";
 
 const app = express();
 
-// var options = {
-//     explorer: true,
-//     swaggerOptions: {
-//         urls: [
-//           {
-//             url: 'http://127.0.0.1:3001/getTask',
-//             name: 'Spec1'
-//           },
-//           {
-//             url: 'http://petstore.swagger.io/v2/swagger.json',
-//             name: 'Spec2'
-//           }
-//         ]
-//       }
-//   };
-
-const options = {
-    definition: {
-      openapi: "3.0.0",
-      info: {
-        title: "LogRocket Express API with Swagger",
-        version: "0.1.0",
-        description:
-          "This is a simple CRUD API application made with Express and documented with Swagger",
-        license: {
-          name: "MIT",
-          url: "https://spdx.org/licenses/MIT.html",
-        },
-        contact: {
-          name: "LogRocket",
-          url: "https://logrocket.com",
-          email: "info@email.com",
-        },
+//defining the API's root information
+const swaggerDefinition = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "LogRocket Express API with Swagger",
+      version: "0.1.0",
+      description:
+        "This is a simple CRUD API application made with Express and documented with Swagger",
+      license: {
+        name: "MIT",
+        url: "https://spdx.org/licenses/MIT.html",
       },
-      servers: [
-        {
-          url: "http://localhost:3001",
-        },
-      ],
+      contact: {
+        name: "LogRocket",
+        url: "https://logrocket.com",
+        email: "info@email.com",
+      },
     },
-    apis: ["./routes/*.ts"],
-  };
-  
-  const specs = swaggerDocument(options);
-  app.use(
-    "/api-docs",
-    swaggerui.serve,
-    swaggerui.setup(specs,{explorer:true}),
-  );
+    servers: [
+      {
+        url: "http://localhost:3001",
+      },
+    ],
+  },
+  apis: ["./src/routes/*.ts"],
+};
+
+const specs = swaggerDocument(swaggerDefinition);
+
+//route for the swagger documentation information page
+app.use(
+  "/api-docs",
+  swaggerui.serve,
+  swaggerui.setup(specs, { explorer: true })
+);
+
+
 // Middlewares
 app.use(cors());
-
 app.use(express.json());
 app.use(cookieParser());
 dotenv.config();
