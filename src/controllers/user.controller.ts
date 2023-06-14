@@ -33,7 +33,7 @@ export const registerUser = async (req: Request, res: Response): Promise<Respons
         return res.send({ msg: "user created" });
     } catch (error) {
         console.log(error)
-        return res.status(500).send({ msg: error?.message || "u got an error" });
+        return res.status(500).send({ msg: error?.detail || "u got an error while adding user" });
     }
 }
 

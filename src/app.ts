@@ -8,6 +8,7 @@ import * as swaggerDocument from "swagger-jsdoc";
 import { dbSource } from "./connection/connection";
 import userRoutes from "./routes/user.route";
 import taskRoutes from "./routes/task.route";
+import { main } from "./utilites/nodemailer";
 
 const app = express();
 
@@ -48,7 +49,6 @@ app.use(
   swaggerui.setup(specs, { explorer: true })
 );
 
-
 // Middlewares
 app.use(cors());
 app.use(express.json());
@@ -58,6 +58,9 @@ dbSource.initialize();
 app.use(userRoutes);
 app.use(taskRoutes);
 //app.use("/api-docs", swaggerui.serve, swaggerui.setup(specs));
+
+app.get("/send-mail",main)
+
 
 app.listen(process.env.PORT, () => {
   console.log("the server is working at " + process.env.PORT);
