@@ -5,6 +5,7 @@ import * as cookieParser from "cookie-parser";
 import * as swaggerui from "swagger-ui-express";
 import * as swaggerDocument from "swagger-jsdoc";
 
+import * as stripe from "stripe";
 import { dbSource } from "./connection/connection";
 import userRoutes from "./routes/user.route";
 import taskRoutes from "./routes/task.route";
@@ -59,7 +60,18 @@ app.use(userRoutes);
 app.use(taskRoutes);
 //app.use("/api-docs", swaggerui.serve, swaggerui.setup(specs));
 
-app.get("/send-mail",main)
+//api to use nodemailer
+app.get("/send-mail", main);
+
+//api end-point to get the user ip address and browser info
+app.get("/ip", (req, res) => {
+  console.log("the ip address is ", req.ip);
+  //res.send(req.socket.remoteAddress)
+  res.json({
+    "user info": `${req.headers["user-agent"]}`,
+    "user ip": `${req.ip}`,
+  });
+});
 
 
 app.listen(process.env.PORT, () => {
