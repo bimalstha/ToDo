@@ -2,9 +2,12 @@ version: "3"
 
 services:
     server:
-        image: todobackend:v6
+        build:
+            context: .
+            dockerfile: Dockerfile
         ports:
             - '3001:3001'
+        image: 'todo'
         depends_on:
             - db
 
@@ -20,7 +23,6 @@ services:
         volumes: 
             - db:/var/lib/postgresql/data
 volumes:
-  db:
-    driver: local
+        db:
 
         
