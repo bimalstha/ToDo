@@ -1,5 +1,5 @@
 #single stage build
-# # base image for the docker image
+# base image for the docker image
 # FROM node:20-alpine3.17
 
 # # sets the working directory inside the container to /todo/src 
@@ -36,7 +36,9 @@ RUN yarn
 COPY . .
 RUN yarn build
 
-FROM build AS final
+FROM node:20-alpine3.17
 WORKDIR /todo
-COPY --from=build /todo/dist ./dist
-CMD ["node", "./dist/app.js"]
+COPY --from=build /todo/dist ./
+COPY --from=build /todo/package.json ./
+RUN npm install --omit=dev
+CMD ["node", "./app.js"]

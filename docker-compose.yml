@@ -5,6 +5,8 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+        env_file: .env
+
         ports:
             - '3001:3001'
         image: 'todo'
@@ -13,7 +15,7 @@ services:
 
 
     db:
-        image: postgres
+        image: postgres:14.1-alpine
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: pass
