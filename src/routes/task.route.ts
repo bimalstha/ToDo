@@ -30,6 +30,7 @@ const taskRoutes = Router();
  *     description: update a task by sending its id as params
  */
 
+
 taskRoutes.get("/task", verifyJwt, getTask); //middleware and next function
 
 taskRoutes.post("/task", verifyJwt, addTask);

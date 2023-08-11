@@ -5,11 +5,12 @@ import * as cookieParser from "cookie-parser";
 import * as swaggerui from "swagger-ui-express";
 import * as swaggerDocument from "swagger-jsdoc";
 
-import * as stripe from "stripe";
+import * as stripe from "stripe"; //for payment
 import { dbSource } from "./connection/connection";
 import userRoutes from "./routes/user.route";
 import taskRoutes from "./routes/task.route";
 import { main } from "./utilites/nodemailer";
+import path = require("path");
 
 const app = express();
 
