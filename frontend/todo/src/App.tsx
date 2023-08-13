@@ -1,17 +1,10 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import LandingPage from "./pages/LandingPage";
+
+import { RouterProvider } from "react-router-dom";
+import { router } from "./core/constants/routers";
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <>
-      <LandingPage />
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

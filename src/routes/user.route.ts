@@ -7,7 +7,7 @@ const userRoutes = Router();
 //user API 
 userRoutes.post("/user", registerUser);
 
-userRoutes.post("/user/login", login);
+userRoutes.post("/login", login);
 
 userRoutes.delete("/user", deleteUser);
 
