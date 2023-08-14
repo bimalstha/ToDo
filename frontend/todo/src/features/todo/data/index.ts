@@ -1,1 +1,1 @@
-export type todoDataType = { title: string; isDone: boolean };
+export type todoDataType = { task: string; isDone: boolean; taskId: string };

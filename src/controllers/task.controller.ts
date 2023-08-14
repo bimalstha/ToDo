@@ -5,39 +5,25 @@ import { getUserById } from "./user.controller";
 
 const taskRepository = dbSource.getRepository(ToDoTask);
 
-export const addNewTask = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  try {
-    // const userr = await getUserById(req.body.user);
-    // console.log("task add", userr);
-    let fileBody = req.body;
-  } catch (error) {
-    return res.status(404).send({ msg: "can't add" });
-  }
-};
+
 
 export const getTask = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   try {
-    console.log(req.body.user, "mero id ");
     const user = await getUserById(req.body.user);
     const userTask = await taskRepository.find({
       where: {
         user,
       },
     });
-    console.log(userTask);
     if (userTask.length) {
       return res.send(userTask);
     } else {
       return res.send({ msg: "user has no task" });
     }
   } catch (error) {
-    console.log(error);
     return res.status(404).send(error);
   }
 };

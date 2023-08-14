@@ -1,5 +1,5 @@
 import { axiosInstance } from "../../../core/config/axiosInstance";
 
-export const todoApi = ()=>{
-    axiosInstance.get("/tasks",)
-}
+export const todoApi = () => {
+  return axiosInstance.get("/task");
+};

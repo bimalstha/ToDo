@@ -31,7 +31,7 @@ const taskRoutes = Router();
  */
 
 
-taskRoutes.get("/task", verifyJwt, getTask); //middleware and next function
+taskRoutes.get("/task", getTask); //middleware and next function
 
 taskRoutes.post("/task", verifyJwt, addTask);
 

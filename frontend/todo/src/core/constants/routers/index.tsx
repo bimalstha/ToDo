@@ -4,5 +4,5 @@ import TodoPage from "../../../features/todo/pages";
 
 export const router = createBrowserRouter([
   { path: "/", element: <LandingPage /> },
-  { path: "/tasks", element: <TodoPage /> },
+  { path: "/task", element: <TodoPage /> },
 ]);

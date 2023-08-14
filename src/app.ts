@@ -67,11 +67,11 @@ app.get("/send-mail", main);
 //api end-point to get the user ip address and browser info
 app.get("/ip", (req, res) => {
   console.log("the ip address is ", req.ip);
-  //res.send(req.socket.remoteAddress)
-  res.json({
-    "user info": `${req.headers["user-agent"]}`,
-    "user ip": `${req.ip}`,
-  });
+  res.send(req.socket.remoteAddress)
+  // res.json({
+  //   "user info": `${req.headers["user-agent"]}`,
+  //   "user ip": `${req.ip}`,
+  // });
 });
 
 
