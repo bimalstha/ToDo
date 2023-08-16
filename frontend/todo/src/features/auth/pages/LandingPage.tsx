@@ -16,10 +16,11 @@ import { Button, TextInput } from "@mantine/core";
 import { Form, useForm } from "@mantine/form";
 import { loginApi } from "../api";
 import { notifications } from "@mantine/notifications";
-
 import { useNavigate } from "react-router-dom";
 
+
 export type loginDataType = { username: string; password: string };
+
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -47,11 +48,11 @@ const LandingPage = () => {
           title: "Login Successful",
           message: "Welcome 🤥",
         });
-        navigate("/tasks");
+        navigate("/gettask");
       }
     } catch (error) {
       notifications.show({
-        title: "login failed",
+        title: "Login failed",
         message: "invalid credentials",
       });
     }

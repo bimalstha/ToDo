@@ -2,25 +2,29 @@ import { Container, Flex, Paper } from "@mantine/core";
 import TodoNavbar from "../components/TodoNavbar";
 import TodoCard from "../components/TodoCard";
 import React from "react";
-import { todoApi } from "../api/todoApi";
+import { gettodoApi } from "../api/todoApi";
 import { todoDataType } from "../data";
+import TodoForm from "../components/TodoForm";
 
 const TodoPage = () => {
   const [listofTodos, setListOfTodos] = React.useState<
     undefined | Array<todoDataType>
   >();
 
-  const asyncFunc = async () => {
+  const listTodoFunction = async () => {
     try {
-      const res = await todoApi();
+      const res = await gettodoApi();
+      console.log("console", res.data);
       if (res.status == 200) {
         setListOfTodos(res.data);
       }
     } catch (error) {}
   };
+
   React.useEffect(() => {
-    asyncFunc();
+    listTodoFunction();
   }, []);
+
   return (
     <Container
       fluid
@@ -33,7 +37,7 @@ const TodoPage = () => {
             return (
               <TodoCard
                 task={todo.task}
-                isDone={todo.isDone}
+                isDoneStatus={todo.isDoneStatus}
                 key={todo.taskId}
               />
             );
@@ -41,6 +45,7 @@ const TodoPage = () => {
           {/* <TodoCard title="bimal ko task" isDone={false} /> */}
         </Flex>
       </Paper>
+      <TodoForm />
     </Container>
   );
 };

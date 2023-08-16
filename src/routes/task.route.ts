@@ -31,12 +31,12 @@ const taskRoutes = Router();
  */
 
 
-taskRoutes.get("/task", getTask); //middleware and next function
+taskRoutes.get("/gettask", getTask); //middleware and next function
 
-taskRoutes.post("/task", verifyJwt, addTask);
+taskRoutes.post("/addtask", addTask);
 
-taskRoutes.delete("/task", verifyJwt, deleteTask);
+taskRoutes.delete("/deletetask", verifyJwt, deleteTask);
 
-taskRoutes.put("/task", verifyJwt, updateTask);
+taskRoutes.put("/updatetask", verifyJwt, updateTask);
 
 export default taskRoutes;

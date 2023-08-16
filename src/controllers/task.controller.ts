@@ -15,7 +15,6 @@ export const getTask = async (
     const user = await getUserById(req.body.user);
     const userTask = await taskRepository.find({
       where: {
-        user,
       },
     });
     if (userTask.length) {
@@ -39,7 +38,7 @@ export const addTask = async (
     let newTask = new ToDoTask();
     newTask.task = task;
     newTask.isDoneStatus = isDoneStatus;
-    newTask.user = user;
+    // newTask.user = user;
     await taskRepository.save(newTask);
     return res.send({ msg: "task added" });
     // let taskToAdd = req.body;
