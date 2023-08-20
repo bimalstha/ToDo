@@ -2,9 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken"
 
 export const verifyJwt = (req: Request, res: Response, next: NextFunction) => {
-    let { authorization } = req.headers;     //authorization from bearer token
-    if (authorization) {
-        let a = authorization.split("Bearer ")[1];    //extracting token from bearer
+    let { cookie } = req.headers;    //authorization from bearer token
+    console.log("headers", req.headers);
+    if (cookie) {
+        let a = cookie.split("jwt=")[1];    //extracting token from bearer
+        console.log("a", a);
         let id = jwt.verify(a, process.env.SECRET_KEY); 
         // console.log("'id'",id);
         // console.log(id["id"]);   

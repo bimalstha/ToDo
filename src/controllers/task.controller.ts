@@ -15,6 +15,7 @@ export const getTask = async (
     const user = await getUserById(req.body.user);
     const userTask = await taskRepository.find({
       where: {
+        user:user,
       },
     });
     if (userTask.length) {

@@ -17,12 +17,12 @@ import { Form, useForm } from "@mantine/form";
 import { loginApi } from "../api";
 import { notifications } from "@mantine/notifications";
 import { useNavigate } from "react-router-dom";
-
+// import { Cookies } from "react-cookie";
 
 export type loginDataType = { username: string; password: string };
 
-
 const LandingPage = () => {
+  // const cookie = new Cookies();
   const navigate = useNavigate();
   const form = useForm<loginDataType>({
     initialValues: {
@@ -48,6 +48,8 @@ const LandingPage = () => {
           title: "Login Successful",
           message: "Welcome 🤥",
         });
+        // setCookie(cookies["jwt"], res.data["token"]);
+        // cookie.set("jwt", res.data["token"], { httpOnly: true });
         navigate("/gettask");
       }
     } catch (error) {

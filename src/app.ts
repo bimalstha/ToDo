@@ -4,8 +4,9 @@ import * as cors from "cors";
 import * as cookieParser from "cookie-parser";
 import * as swaggerui from "swagger-ui-express";
 import * as swaggerDocument from "swagger-jsdoc";
+//import * as stripe from "stripe"; //for payment
 
-import * as stripe from "stripe"; //for payment
+
 import { dbSource } from "./connection/connection";
 import userRoutes from "./routes/user.route";
 import taskRoutes from "./routes/task.route";
@@ -41,9 +42,7 @@ const swaggerDefinition = {
   },
   apis: ["./src/routes/*.ts"],
 };
-
 const specs = swaggerDocument(swaggerDefinition);
-
 //route for the swagger documentation information page
 app.use(
   "/api-docs",
@@ -52,28 +51,24 @@ app.use(
 );
 
 // Middlewares
-app.use(cors());
-app.use(express.json());
-app.use(cookieParser());
+app
+  .use(
+    cors({
+      origin: "http://localhost:5173",
+      credentials: true,
+    })
+  )
+  .use(express.json())
+  .use(cookieParser())
+  .use(userRoutes)
+  .use(taskRoutes);
+
 dotenv.config();
 dbSource.initialize();
-app.use(userRoutes);
-app.use(taskRoutes);
+
 //app.use("/api-docs", swaggerui.serve, swaggerui.setup(specs));
-
 //api to use nodemailer
-app.get("/send-mail", main);
-
-//api end-point to get the user ip address and browser info
-app.get("/ip", (req, res) => {
-  console.log("the ip address is ", req.ip);
-  res.send(req.socket.remoteAddress)
-  // res.json({
-  //   "user info": `${req.headers["user-agent"]}`,
-  //   "user ip": `${req.ip}`,
-  // });
-});
-
+// app.get("/send-mail", main);
 
 app.listen(process.env.PORT, () => {
   console.log("the server is working at " + process.env.PORT);

@@ -32,6 +32,7 @@
     "nodemailer": "^6.9.3",
     "pg": "^8.11.0",
     "postgres": "^3.3.4",
+    "react-cookie": "^5.0.0",
     "reflect-metadata": "^0.1.13",
     "stripe": "^12.9.0",
     "swagger-jsdoc": "^6.2.8",

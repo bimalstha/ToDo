@@ -52,7 +52,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
       const x = await verifyPassword(req.body.password, user.password); //verify password
       if (x) {
         const token = jwt.sign({ id: user.userId }, process.env.SECRET_KEY); // { expiresIn: '1d' }
-        res.send({
+        res.cookie("jwt", token, { httpOnly: true }).send({
           token: token,
           msg: "login successful",
         });

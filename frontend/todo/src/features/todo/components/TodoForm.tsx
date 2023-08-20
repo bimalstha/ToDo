@@ -6,7 +6,7 @@ import { notifications } from "@mantine/notifications";
 import { useNavigate } from "react-router-dom";
 
 const TodoForm = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
   const form = useForm<addTaskDataTye>({
     initialValues: {
       task: "",
@@ -30,7 +30,7 @@ const TodoForm = () => {
           title: "Success",
           message: "new task added",
         });
-        navigate("/gettask")
+        navigate("/gettask");
       } else {
         notifications.show({
           title: "Failed",
